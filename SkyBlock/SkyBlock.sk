@@ -1,0 +1,116 @@
+#----
+#SkyBlock with Skript
+# Version 0.1 Alpha
+# -By GrassyMoss
+#----
+
+#----
+# #! Dependencies: !#
+# - Skript Plus
+# - WorldGuard
+#----
+
+#----
+#Notes:
+# - Possibly replace multiple island variables with one list variable per player to store all of their islands.
+# - Possibly combine island homes into one with #?%arg integer% ?# as the #?{island.%player%.%arg integer%}?# instead of having one for each number.
+# - Currently supports three islands for donors, with more to come soon.
+#----
+
+options:
+	#limit.x/y/z changes the maximum radius the script will choose a random integer from. Basically, the largest possible x/y/z coordinate you could have an island at.
+	#This is also the maximum location it checks for an available spot for an island. A larger number is better for larger servers, and a smaller number will prevent the server from having to load far-off chunks.
+	#A good formula to use is [Possible number of islands you want] * 200 = limit.x or limit.y
+	island.limit.x: 5000
+	island.limit.z: 5000
+	island.limit.y: 236
+	#amount.loop is the amount of times the code will check to see an available space before ending the loop and returning an error to the player.
+	#Currently has no functionality
+	island.loop.amount: 5
+
+command /island [<text="">] [<integer=1>]:
+	description: The main for all skyblock islands
+	aliases: /is, /skyblock, /sky
+	trigger:
+		arg 1 is "help", "information" or "info":
+			message "&b-&8-&b-&8-"
+			message "We still need to put info here. Sorry."
+			message "&b-&8-&b-&8-"
+		arg 1 is "home", "is", "" or "me":
+			arg 2 is 1:
+				{island.%player%.1} is set:
+					teleport player to {island.%player%.1}
+					message "&b-&8-&b-&8-"
+					message "&bTeleporting you to your island..."
+					message "&b-&8-&b-&8-"
+				else:
+					message "&b-&8-&b-&8-"
+					message "You don't have an island 1! Create one with &a/is create&r."
+					message "&b-&8-&b-&8-"
+					#exit conditional
+			arg 2 is 2:
+				{island.%player%.2} is set:
+					teleport player to {island.%player%.2}
+					message "&b-&8-&b-&8-"
+					message "&bTeleporting you to your island 2..."
+					message "&b-&8-&b-&8-"
+				else:
+					message "&b-&8-&b-&8-"
+					message "You don't have an island 2! Create one with &a/is create 2&r."
+					message "&b-&8-&b-&8-"
+			arg 2 is 3:
+				{island.%player%.3} is set:
+					teleport player to {island.%player%.}
+					message "&b-&8-&b-&8-"
+					message "&bTeleporting you to your island 3..."
+					message "&b-&8-&b-&8-"
+				else:
+					message "&b-&8-&b-&8-"
+					message "You don't have an island 3! Create one with &a/is create 3&r."
+					message "&b-&8-&b-&8-"
+			else:
+				message "&b-&8-&b-&8-"
+				message "Error. Type &a/is help&r for help."
+				message "&b-&8-&b-&8-"
+					
+		arg 1 is "create" or "new":
+			{island.%player%.%arg integer%} is set:
+				message "&b-&8-&b-&8-"
+				message "&cError:&r You already have an island %arg integer%! Reset it with &a/is reset %arg integer% &r. "
+				message "&b-&8-&b-&8-"
+			else:
+				arg 2 is 1:
+					set {_island.random.x} to a random integer between 1 and {@island.limit.x}
+					set {_island.random.y} to a random integer between 20 and {@island.limit.y}
+					set {_island.random.z} to a random integer between 1 and {@island.limit.z}
+					set {_island.loc} to {_island.random.x}, {_island.random.y}, {_island.random.z}
+					teleport player to {_island.loc}
+					set {_island.building} to true
+					{_island.building} is true:
+						#walk on grass:
+							#cancel event
+						message "&b-&8-&b-&8-"
+						message "You can't move while we are building your island."
+						message "&b-&8-&b-&8-"
+					#loop {@island.loop.amount} times:
+					loop blocks in radius 100 around the player:
+						loop-block is bedrock:
+							message "&b-&8-&b-&8-"
+							message "We could not find a place for your island. Please try &a/is create&r again."
+							message "&b-&8-&b-&8-"
+							exit 5 sections
+						loop-block is not bedrock:
+							set blocks in radius 2 to grass
+							set the block 5 below the player to bedrock
+							set the block 2 below 1 east to dirt
+							set the block 2 below 1 west to dirt
+							set the block 2 below 1 north to dirt
+							set the block 2 below 1 south to dirt
+							set the block 2 below the player to sand
+							set the block 3 below the player to sand
+							set the block 4 below the player to sand
+							#More to come
+							set {_island.building} to false
+		arg 1 is "reset":
+			
+				

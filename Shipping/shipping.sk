@@ -1,0 +1,35 @@
+#----
+#SkShipping
+# Version 0.1 Alpha
+# -By GrassyMoss
+#----
+
+#----
+#Dependencies:
+# -Latest version of Skript
+#----
+
+#----
+#Notes:
+# -
+#----
+
+options:
+	#The amount of time the receiving player has to accept or decline an incoming trade.
+	ship.trade.timeout: 180
+	
+	
+command /gift <offlineplayer> <item> <integer>:
+	description: Send a specified item to a specified player.
+	usage: /gift <Player to send the item(s) to> <Item to send> <Amount of item to send>
+	aliases: /senditem, /si
+	trigger:
+		if arg 1 is %player%:
+			message "&8-&6-&8-&6-&8-&6-"
+			message "&8[&6Gift&8]&c Error:&r You can't send gifts to yourself!"
+			message "&8-&6-&8-&6-&8-&6-"
+			exit
+		if arg 1 is online:
+			if player has %arg 3% of %arg 2%:
+				exit
+		if arg 1 is offline:
