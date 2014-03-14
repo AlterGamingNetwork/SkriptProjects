@@ -1,0 +1,31 @@
+command /calculator <number> <text> <number>:
+	description: Performs math operations between two given integers.
+	usage: /calculator <first number> <operation (ex: +, -, /, *)> <second number>
+	aliases: /cal, /calc
+	trigger:
+		if arg 1 is greater than 99999:
+			message "&8[&9Calculator&8]&7 &cError:&r Your first number was too large! It has to be less than 100,000."
+			exit
+		if arg 3 is greater than 99999:
+			message "&8[&9Calculator&8]&7 &cError:&r Your second number was too large! It has to be less than 100,000."
+			exit
+		if arg 2 is "+", "plus", "add", or "and":
+			set {_calc.sol} to arg 1 + arg 3
+			message "&8[&9Calculator&8]&7 %arg 1% + %arg 3% =&r %{_calc.sol}%"
+			exit
+		if arg 2 is "-", "subtracted", "subtract", "less", or "minus":
+			set {_calc.sol} to arg 1 - arg 3
+			message "&8[&9Calculator&8]&7 %arg 1% - %arg 3% =&r %{_calc.sol}%"
+			exit
+		if arg 2 is "*", "x", "times", "of", "multiply", or "multiplied":
+			set {_calc.sol} to arg 1 * arg 3
+			message "&8[&9Calculator&8]&7 %arg 1% * %arg 3% =&r %{_calc.sol}%"
+			exit
+		if arg 2 is "/", "split", "divided", or "divide":
+			set {_calc.sol} to arg 1 / arg 3
+			message "&8[&9Calculator&8]&7 %arg 1% / %arg 3% =&r %{_calc.sol}%"
+			exit
+		else:
+			message "&8[&9Calculator&8]&7 &cError:&r Invalid operation or number!"
+			exit
+			

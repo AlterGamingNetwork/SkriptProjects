@@ -16,4 +16,30 @@
 #----
 
 options:
-	
+	#Sets the version of the script
+	mq.ver: 0.1 (Alpha)
+#--- Player-Side Command
+command /modreq <text>:
+	description: Allows players to submit requests for help if a staff member is online.
+	aliases: /mq, /staffhelp, /helpop, /helpme, /reguest
+	trigger:
+		set player's location to {_modreq.location}
+		log "A modreq was submitted by %command sender% for %arg 1% at location %{_modreq.location}%" to "modreqs/modreqs.log"
+		make player execute command "mail send feyraz99 '%command sender% submitted modreq: %arg 1% at %{_modreq.location}%'"
+		message "&cModreq submitted"
+		
+#--- Staff Commands
+command /modreqcheck [<text="check">]:
+	description: The staff command for modreqs. Allows checking, teleporting, closing, and viewing of requests.
+	aliases: /check, /mqstaff, /mqs
+	permission: viper.mod
+	trigger:
+		if arg 1 is "help", or "info":
+			message "&8-&c-&8-&c-"
+			message "&lSkModreq"
+			message "&7 Version {@mq.ver}"
+			message "&7 - By GrassyMoss & Feyraz99"
+			message "&8-&c-&8-&c-"
+			exit
+		
+			
