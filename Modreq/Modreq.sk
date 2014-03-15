@@ -1,12 +1,12 @@
 #----
 #SkModreq 
 # Version 0.1 Alpha
-# -By GrassyMoss & Feyraz99
+# - Feyraz99
 #----
 
 #----
 #Notes:
-# - 
+# - Replace Feyraz99 with the name of the staff member you want to sumbit the req to and repeat for multiple staff
 #----
 
 #----
@@ -22,6 +22,10 @@ options:
 command /modreq <text>:
 	description: Allows players to submit requests for help if a staff member is online.
 	aliases: /mq, /staffhelp, /helpop, /helpme, /reguest
+
+command /modreq <text>:
+	description: Allows players to submit griefs to the staff
+	aliases: /mq
 	trigger:
 		set player's location to {_modreq.location}
 		log "A modreq was submitted by %command sender% for %arg 1% at location %{_modreq.location}%" to "modreqs/modreqs.log"
@@ -41,5 +45,4 @@ command /modreqcheck [<text="check">]:
 			message "&7 - By GrassyMoss & Feyraz99"
 			message "&8-&c-&8-&c-"
 			exit
-		
 			
