@@ -1,0 +1,82 @@
+#----
+#SkAuction
+# Version 0.1 Alpha
+# - By GrassyMoss
+#----
+
+#----
+#Notes:
+# - 
+#----
+
+#----
+#Dependencies:
+# - Latest version of Skript
+#----
+
+options:
+	#The currency variable SkAuction should use to take or add money from. Use a variable for Skript-made economies, and use "player's balance" for economies inherited from Skript's Vault support.
+	auc.curr: player's balance
+	#The minimum starting bid for an auction. Represented in a currency amount.
+	auc.startmin: 1
+	#Minimum amount a player can bid when bidding on an auction. Also represented in a currency amount.
+	auc.bidmin: 1
+
+command /iauction [<text="help">] [<text="1">] [<number={@auc.startmin}>]:
+	description: Auction an item in your inventory, view information about an ongoing auction, or view help regarding this command.
+	aliases: /auc, /itemauction, /itema
+	trigger:
+		if arg 1 is "help", "command", "", "menu", "halp", or "cmd":
+			message "&8-&2-&8[&l&2Auction Help&r&8]&2-&8-"
+			message "&7Note: &r/auc&7 is an alias of &r/auction&7."
+			message ""
+			message "&7To start an auction, hold the desired item in your hand and use the following command:"
+			message " /auction start <Number of items to auction> <Starting Bid>"
+			message ""
+			message "&7To view information about an ongoing auction, type:"
+			message " /auction current &8or&r /auction info"
+			message "&8-&2-&8-&2"
+			exit
+		if arg 1 is "current", "curr", "view", "now", "og", "ongoing", "inf", or "info":
+			if {auc.now} is true:
+				message "&8-&2-&8[&2&lCurrent Auction&r&8]&2-&8-"
+				message "&8[&2Current Auction&8]&b %{auc.player}% &ris auctioning:"
+				message " &b %{auc.amt}%&r of &b%{auc.item}% &rfor&b %now - {auc.starttime}% &rminute(s)."
+				message "&8-&2-&8-&2-"
+				exit
+			else:
+				message "&8-&2-&8[&2&lCurrent Auction&r&8]&2-&8-"
+				message "&7There are currently no ongoing auctions. Start one with &a/auction start&7."
+				message "&8-&2-&8-&2-"
+				exit
+		if arg 1 is "start", "new", "begin", "this", "dis", "s", or "star":
+			if {auc.now} is true:
+				message "&8-&2-&8[&2&lAuction&r&8]&2-&8-"
+				message "&4Error:&7 An auction is currently going on. Please wait until it is finished to auction your items."
+				message "&8-&2-&8-&2-"
+				exit
+			else:
+				if number-argument is less than {@auc.startmin}:
+					message "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"
+					message "&4Error:&7 Your starting bid of &b%arg 3%&7 is lower than the minimum allowed starting bid of &b%{@auc.startmin}%&7."
+					message "&8-&2-&8-&2-"
+					exit
+				else:
+					if player is holding air:
+						message "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"
+						message "&4Error:&7 You are not holding anything to auction!"
+						message "&8-&2-&8-&2-"
+						exit
+					else:
+						if arg 2 is "all", "allofthem", "items", "a", or "allitems":
+							send "no all things plz"
+							exit
+						if arg 2 is a number:
+							send "numbers are cool"
+							exit
+						else:
+							message "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"
+							message "&4Error: &b%arg 2%&7 is &cnot&7 a valid argument! The number of items to auction must be 'all' or a number."
+							message "&8-&2-&8-&2-"
+							exit
+							
