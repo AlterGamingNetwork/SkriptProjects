@@ -1,0 +1,31 @@
+#----
+#SkriptAlert
+# Version 1.0 Ready-to-use
+# - By GrassyMoss
+#----
+
+#----
+#Notes:
+# - Custom alerts have a light blue prefix
+#----
+
+#----
+#Dependencies:
+# - Latest version of Skript
+#----
+
+command /alert [<text="alert">] <text>:
+#	aliases:
+	description: Broadcasts something to the whole server with no user. Has custom prefixes available.
+	usage: &a/alert [Type of alert] <Message>&r or &a/alert <Prefix> <Message>&r.
+	permission: viper.admin
+	trigger:
+		if arg 1 is "alert", "a", "", or "default":
+			broadcast "&8[&4Alert&8]&r %arg 2%"
+			exit
+		if arg 1 is "info", "i", "information", or "tip":
+			broadcast "&8[&2Info&8]&r %arg 2%"
+			exit
+		else:
+			broadcast "&8[&b%arg 1%&8]&r %arg 2%"
+			exit 

@@ -1,12 +1,12 @@
 #----
 #SkAuction
-# Version 0.1 Alpha
+# Version 0.2 Alpha
 # - By GrassyMoss
 #----
 
 #----
 #Notes:
-# - 
+# - Not fully functional; not ready to use.
 #----
 
 #----
@@ -21,6 +21,8 @@ options:
 	auc.startmin: 1
 	#Minimum amount a player can bid when bidding on an auction. Also represented in a currency amount.
 	auc.bidmin: 1
+	#The default time for which in auction runs. In minutes.
+	auc.duration: 2
 
 command /iauction [<text="help">] [<text="1">] [<number={@auc.startmin}>]:
 	description: Auction an item in your inventory, view information about an ongoing auction, or view help regarding this command.
@@ -40,8 +42,8 @@ command /iauction [<text="help">] [<text="1">] [<number={@auc.startmin}>]:
 		if arg 1 is "current", "curr", "view", "now", "og", "ongoing", "inf", or "info":
 			if {auc.now} is true:
 				message "&8-&2-&8[&2&lCurrent Auction&r&8]&2-&8-"
-				message "&8[&2Current Auction&8]&b %{auc.player}% &ris auctioning:"
-				message " &b %{auc.amt}%&r of &b%{auc.item}% &rfor&b %now - {auc.starttime}% &rminute(s)."
+				message "&8[&2Current Auction&8]&b %{auc.player}% &ris auctioning&b %{auc.item}%"
+				message " &7Current Bid:&2 $%{auc.bid.amt}%&7 by &2%{auc.bid.player}%&7." #&rfor&b %difference between now and {auc.endtime}% &rminute(s)."
 				message "&8-&2-&8-&2-"
 				exit
 			else:
@@ -69,10 +71,21 @@ command /iauction [<text="help">] [<text="1">] [<number={@auc.startmin}>]:
 						exit
 					else:
 						if arg 2 is "all", "allofthem", "items", "a", or "allitems":
-							send "no all things plz"
+							broadcast "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"
+							broadcast "&&b%{auc.player}% &7is auctioning:"
+							broadcast "&b %{auc.item}% &7for&b %{@auc.duration}% &rminute(s)."
+							broadcast "&7 Bidding starts at&2 $%number-argument%"
+							
+							broadcast "&8-&2-&8-&2-"
+							set {auc.now} to true
+							set {auc.item} to the held item of player
+							set {auc.player} to player
+							remove all {auc.item} from the player
 							exit
 						if arg 2 is a number:
-							send "numbers are cool"
+							message "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"
+							message "auc starting num"
+							message "&8-&2-&8-&2-"
 							exit
 						else:
 							message "&8-&2-&8[&2&lNew Auction&r&8]&2-&8-"

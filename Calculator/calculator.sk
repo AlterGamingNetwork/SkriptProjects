@@ -1,3 +1,20 @@
+#----
+#SkCalc
+# Version 1.0 Ready-to-use
+# - By GrassyMoss
+#----
+
+#----
+#Notes:
+# - Supports addition, subtraction, multiplication, and division
+#----
+
+#----
+#Dependencies:
+# - Latest version of Skript
+#----
+
+
 command /calculator <number> <text> <number>:
 	description: Performs math operations between two given integers.
 	usage: /calculator <first number> <operation (ex: +, -, /, *)> <second number>
